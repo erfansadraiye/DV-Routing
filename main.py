@@ -30,6 +30,9 @@ class Neighbor:
     def identifier(self):
         return f'{self.ip_address}/{self.subnet_mask_bits_number}'
 
+    def clear_neighbors(self):
+        self.neighbors = []
+
     def add_neighbor(self, neighbor):
         neighbor.distance_estimate += self.distance_estimate
         self.neighbors.append(neighbor)
@@ -85,6 +88,7 @@ def update_link(link_id, neighbors):
     if link is None:
         print("DEBUG: link doesn't exist for updating")
     link_neighbor = link.neighbor
+    link_neighbor.clear_neighbors()
     for n in neighbors:
         link_neighbor.add_neighbor(n)
     Neighbor.update_distances()
